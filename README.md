@@ -1,5 +1,11 @@
 ## Cats-check
 
+
+### Fork
+
+This is currently forked from [here](https://github.com/non/cats-check) since it appears that it never got maintained
+(and it was never even published)
+
 ### Overview
 
 *Cats-check* associates ScalaCheck data types (i.e. `Gen` and `Cogen`)

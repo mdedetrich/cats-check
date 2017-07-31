@@ -1,9 +1,11 @@
 import ReleaseTransformations._
 
+val catsVersion = "0.8.1"
+
 lazy val catsCheckSettings = Seq(
-  organization := "org.typelevel",
+  organization := "org.mdedetrich",
   licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
-  homepage := Some(url("http://github.com/non/cats-check")),
+  homepage := Some(url("http://github.com/mdedetrich/cats-check")),
 
   scalaVersion := "2.12.0",
   crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.0"),
@@ -16,8 +18,8 @@ lazy val catsCheckSettings = Seq(
 
   libraryDependencies ++= Seq(
     "org.scalacheck" %%% "scalacheck" % "1.13.4",
-    "org.typelevel" %%% "cats" % "0.8.1",
-    "org.typelevel" %%% "cats-laws" % "0.8.1" % "test",
+    "org.typelevel" %%% "cats" % catsVersion,
+    "org.typelevel" %%% "cats-laws" % catsVersion % "test",
     "org.scalatest" %%% "scalatest" % "3.0.0" % "test",
     "org.typelevel" %%% "discipline" % "0.7.2"      % "test"
   ),
@@ -38,14 +40,19 @@ lazy val catsCheckSettings = Seq(
 
   pomExtra := (
     <scm>
-      <url>git@github.com:non/jawn.git</url>
-      <connection>scm:git:git@github.com:non/jawn.git</connection>
+      <url>git@github.com:mdedetrich/cats-check.git</url>
+      <connection>scm:git:git@github.com:mdedetrich/cats-check.git</connection>
     </scm>
     <developers>
       <developer>
         <id>d_m</id>
         <name>Erik Osheim</name>
         <url>http://github.com/non/</url>
+      </developer>
+      <developer>
+        <id>mdedetrich</id>
+        <name>Matthew de Detrich</name>
+        <url>http://github.com/mdedetrich/</url>
       </developer>
     </developers>
   ),
@@ -72,14 +79,14 @@ lazy val noPublish = Seq(
 lazy val root = project
   .in(file("."))
   .aggregate(catsCheckJS, catsCheckJVM)
-  .settings(name := "catsCheck-root")
+  .settings(name := "cats-check-root")
   .settings(catsCheckSettings: _*)
   .settings(noPublish: _*)
 
 lazy val catsCheck = crossProject
   .crossType(CrossType.Pure)
   .in(file("."))
-  .settings(name := "catsCheck")
+  .settings(name := "cats-check")
   .settings(catsCheckSettings: _*)
 
 lazy val catsCheckJVM = catsCheck.jvm
