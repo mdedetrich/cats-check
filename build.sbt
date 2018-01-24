@@ -17,7 +17,7 @@ lazy val catsCheckSettings = Seq(
   ),
 
   libraryDependencies ++= Seq(
-    "org.scalacheck" %%% "scalacheck" % "1.13.4",
+    "org.scalacheck" %%% "scalacheck" % "1.13.5",
     "org.typelevel" %%% "cats-core" % catsVersion,
     "org.typelevel" %%% "cats-laws" % catsVersion % "test",
     "org.scalatest" %%% "scalatest" % "3.0.0" % "test",
