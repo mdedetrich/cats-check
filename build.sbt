@@ -68,7 +68,7 @@ lazy val catsCheckSettings = Seq(
     publishArtifacts,
     setNextVersion,
     commitNextVersion,
-    ReleaseStep(action = Command.process("sonatypeReleaseAll", _)),
+    releaseStepCommand("sonatypeReleaseAll"),
     pushChanges))
 
 lazy val noPublish = Seq(
