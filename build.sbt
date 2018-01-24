@@ -7,8 +7,8 @@ lazy val catsCheckSettings = Seq(
   licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
   homepage := Some(url("http://github.com/mdedetrich/cats-check")),
 
-  scalaVersion := "2.12.1",
-  crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.1"),
+  scalaVersion := "2.12.4",
+  crossScalaVersions := Seq("2.10.7", "2.11.12", scalaVersion.value),
 
   scalacOptions ++= Seq(
     "-feature",
