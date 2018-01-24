@@ -20,7 +20,7 @@ lazy val catsCheckSettings = Seq(
     "org.scalacheck" %%% "scalacheck" % "1.13.5",
     "org.typelevel" %%% "cats-core" % catsVersion,
     "org.typelevel" %%% "cats-laws" % catsVersion % "test",
-    "org.scalatest" %%% "scalatest" % "3.0.0" % "test",
+    "org.scalatest" %%% "scalatest" % "3.0.4" % "test",
     "org.typelevel" %%% "discipline" % "0.8" % "test"
   ),
 
