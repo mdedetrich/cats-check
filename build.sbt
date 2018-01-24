@@ -1,6 +1,6 @@
 import ReleaseTransformations._
 
-val catsVersion = "0.9.0"
+val catsVersion = "1.0.1"
 
 lazy val catsCheckSettings = Seq(
   organization := "org.mdedetrich",
@@ -18,10 +18,10 @@ lazy val catsCheckSettings = Seq(
 
   libraryDependencies ++= Seq(
     "org.scalacheck" %%% "scalacheck" % "1.13.4",
-    "org.typelevel" %%% "cats" % catsVersion,
+    "org.typelevel" %%% "cats-core" % catsVersion,
     "org.typelevel" %%% "cats-laws" % catsVersion % "test",
     "org.scalatest" %%% "scalatest" % "3.0.0" % "test",
-    "org.typelevel" %%% "discipline" % "0.7.3"      % "test"
+    "org.typelevel" %%% "discipline" % "0.8" % "test"
   ),
 
   releaseCrossBuild := true,

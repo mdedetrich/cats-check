@@ -4,9 +4,7 @@ package instances
 import scala.language.higherKinds
 
 import cats._
-import cats.implicits._
 
-import functor.Contravariant
 import rng.Seed
 
 object cogen extends CogenInstances {
@@ -38,8 +36,8 @@ object cogen extends CogenInstances {
 }
 
 trait CogenInstances {
-  implicit val cogenContravariantCartesian: ContravariantCartesian[Cogen] =
-    new ContravariantCartesian[Cogen] {
+  implicit val cogenContravariantSemigroupal: ContravariantSemigroupal[Cogen] =
+    new ContravariantSemigroupal[Cogen] {
       def contramap[A, B](c: Cogen[A])(f: B => A): Cogen[B] =
         c.contramap(f)
       def product[A, B](ca: Cogen[A], cb: Cogen[B]): Cogen[(A, B)] =
