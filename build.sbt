@@ -1,14 +1,14 @@
 import ReleaseTransformations._
 
-val catsVersion = "0.9.0"
+val catsVersion = "1.0.1"
 
 lazy val catsCheckSettings = Seq(
   organization := "org.mdedetrich",
   licenses += ("MIT", url("http://opensource.org/licenses/MIT")),
   homepage := Some(url("http://github.com/mdedetrich/cats-check")),
 
-  scalaVersion := "2.12.1",
-  crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.1"),
+  scalaVersion := "2.12.4",
+  crossScalaVersions := Seq("2.10.7", "2.11.12", scalaVersion.value),
 
   scalacOptions ++= Seq(
     "-feature",
@@ -17,11 +17,11 @@ lazy val catsCheckSettings = Seq(
   ),
 
   libraryDependencies ++= Seq(
-    "org.scalacheck" %%% "scalacheck" % "1.13.4",
-    "org.typelevel" %%% "cats" % catsVersion,
+    "org.scalacheck" %%% "scalacheck" % "1.13.5",
+    "org.typelevel" %%% "cats-core" % catsVersion,
     "org.typelevel" %%% "cats-laws" % catsVersion % "test",
-    "org.scalatest" %%% "scalatest" % "3.0.0" % "test",
-    "org.typelevel" %%% "discipline" % "0.7.3"      % "test"
+    "org.scalatest" %%% "scalatest" % "3.0.4" % "test",
+    "org.typelevel" %%% "discipline" % "0.8" % "test"
   ),
 
   releaseCrossBuild := true,
@@ -68,7 +68,7 @@ lazy val catsCheckSettings = Seq(
     publishArtifacts,
     setNextVersion,
     commitNextVersion,
-    ReleaseStep(action = Command.process("sonatypeReleaseAll", _)),
+    releaseStepCommand("sonatypeReleaseAll"),
     pushChanges))
 
 lazy val noPublish = Seq(

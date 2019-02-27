@@ -46,33 +46,22 @@ trait GenInstances extends GenInstances0 {
         for { x <- gx; y <- gy } yield x |+| y
     }
 
-  implicit val genMonadCombine: MonadCombine[Gen] =
-    new MonadCombine[Gen] {
-      def empty[A]: Gen[A] =
+  implicit val genAlternative: Alternative[Gen] =
+    new Alternative[Gen] {
+      override def ap[A, B](ff: Gen[A => B])(fa: Gen[A]): Gen[B] =
+        for { ff <- ff; fa <- fa } yield ff(fa)
+      override def empty[A]: Gen[A] =
         Gen.fail
-      def combineK[A](gx: Gen[A], gy: Gen[A]): Gen[A] =
+      override def combineK[A](gx: Gen[A], gy: Gen[A]): Gen[A] =
         Gen.gen { (params, seed) =>
           val rx = gx.doApply(params, seed)
           if (rx.retrieve.isDefined) rx
           else gy.doApply(params, rx.seed)
         }
-      def pure[A](a: A): Gen[A] =
+      override def pure[A](a: A): Gen[A] =
         Gen.const(a)
       override def map[A, B](g: Gen[A])(f: A => B): Gen[B] =
         g.map(f)
-      def flatMap[A, B](g: Gen[A])(f: A => Gen[B]): Gen[B] =
-        g.flatMap(f)
-      def tailRecM[A, B](a: A)(f: A => Gen[Either[A, B]]): Gen[B] = {
-        def loop(a: A, params: Parameters, seed: Seed): Gen.R[B] = {
-          val r = f(a).doApply(params, seed)
-          r.retrieve match {
-            case Some(Left(a)) => loop(a, params, r.seed)
-            case Some(Right(b)) => Gen.r(Some(b), r.seed)
-            case None => Gen.r(None, r.seed)
-          }
-        }
-        Gen.gen((params, seed) => loop(a, params, seed))
-      }
     }
 }
 

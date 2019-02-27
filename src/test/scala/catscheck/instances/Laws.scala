@@ -1,14 +1,12 @@
 package org.scalacheck
 package instances
 
-import scala.util.{Failure, Success, Try}
-
 import cats.Eq
 import cats.data.NonEmptyList
 import cats.implicits._
 
 import org.scalatest.{FunSuite, Matchers}
-import org.scalatest.prop.{Configuration, PropertyChecks}
+import org.scalatest.prop.PropertyChecks
 import org.typelevel.discipline.scalatest.Discipline
 
 import org.scalacheck.Arbitrary.arbitrary
@@ -21,12 +19,12 @@ class CatsCheckLaws extends FunSuite
     with Discipline
     with Setup {
 
-  checkAll("Gen", cats.laws.discipline.MonadCombineTests[Gen].monadCombine[Int, Int, Int])
-  checkAll("Gen[String]", cats.kernel.laws.GroupLaws[Gen[String]].monoid)
-  checkAll("Gen[NonEmptyList[Int]]", cats.kernel.laws.GroupLaws[Gen[NonEmptyList[Int]]].semigroup)
+  checkAll("Gen", cats.laws.discipline.AlternativeTests[Gen].alternative[Int, Int, Int])
+  checkAll("Gen[String]", cats.kernel.laws.discipline.MonoidTests[Gen[String]].monoid)
+  checkAll("Gen[NonEmptyList[Int]]", cats.kernel.laws.discipline.SemigroupTests[Gen[NonEmptyList[Int]]].semigroup)
 
   checkAll("Cogen", cats.laws.discipline.ContravariantTests[Cogen].contravariant[Int, Int, Int])
-  checkAll("Cogen", cats.laws.discipline.CartesianTests[Cogen].cartesian[Int, Int, Int])
+  checkAll("Cogen", cats.laws.discipline.SemigroupalTests[Cogen].semigroupal[Int, Int, Int])
   checkAll("Cogen", cats.laws.discipline.MonoidKTests[Cogen].monoidK[Int])
 }
 
@@ -45,7 +43,7 @@ trait Setup {
     Cogen[Long].contramap(_.long._1)
 
   implicit def arbitraryNonEmptyList[A: Arbitrary]: Arbitrary[NonEmptyList[A]] =
-    Arbitrary((arbitrary[A], arbitrary[List[A]]).map2(NonEmptyList(_, _)))
+    Arbitrary(for {x <- arbitrary[A]; xs <- arbitrary[List[A]]} yield NonEmptyList(x, xs))
 
   // scalacheck's built-in Arbitrary[Gen[A]] is not great.
   implicit def arbitraryGen[A: Arbitrary]: Arbitrary[Gen[A]] = {
